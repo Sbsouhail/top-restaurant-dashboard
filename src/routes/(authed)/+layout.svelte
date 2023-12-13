@@ -1,6 +1,6 @@
 <nav>
-	<a href="/account">account</a>
-	<a href="/main">home</a>
+	<a href="/">Home</a>
+	<a href="/account">Account</a>
 </nav>
 
 <slot />
