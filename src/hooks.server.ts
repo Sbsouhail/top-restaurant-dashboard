@@ -4,7 +4,7 @@ export const handle = async ({ event, resolve }) => {
 		let fetchedUser;
 
 		if (tokenCookie) {
-			const res = await event.fetch('http://localhost:1337/api/users/me', {
+			const res = await event.fetch('http://localhost:3000/api/users/me', {
 				method: 'get',
 				headers: {
 					'content-type': 'application/json',
@@ -20,10 +20,10 @@ export const handle = async ({ event, resolve }) => {
 		if (event.url.pathname.startsWith('/auth') && fetchedUser) {
 			return redirectTo('/');
 		} else if (!event.url.pathname.startsWith('/auth') && !fetchedUser) {
-			return redirectTo('/auth', 'token');
+			return redirectTo('/auth', 'access_token');
 		}
 	} catch (e) {
-		return redirectTo('/auth', 'token');
+		return redirectTo('/auth', 'access_token');
 	}
 	const response = await resolve(event);
 	return response;
