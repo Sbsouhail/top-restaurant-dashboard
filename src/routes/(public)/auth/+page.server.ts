@@ -11,7 +11,7 @@ export const actions = {
 			return fail(400, { email, missing: true });
 		}
 
-		const res = await fetch('http://localhost:3000/api/auth/login', {
+		const res = await fetch('http://localhost:3000/api/auth/login/restaurant-owner', {
 			method: 'post',
 			body: JSON.stringify({ email, password }),
 			headers: {

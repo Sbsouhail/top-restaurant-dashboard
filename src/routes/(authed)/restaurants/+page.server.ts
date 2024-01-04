@@ -1,6 +1,7 @@
 import type { AuthUser } from '../../../types/auth-user.interface';
 import type { PageServerLoad } from '../../(public)/auth/$types';
 import { redirect, type Actions, fail } from '@sveltejs/kit';
+import type { Restaurant } from '../../../types/restaurant.interface';
 
 function redirectTo(location: string, cookieToDelete?: string, body?: string): Response {
 	return new Response(body, {
@@ -18,13 +19,13 @@ export const load: PageServerLoad = async ({
 	cookies,
 	fetch
 }): Promise<{
-	users: { items: AuthUser[]; count: number };
+	restaurants: { items: Restaurant[]; count: number };
 }> => {
 	const tokenCookie = cookies.get('access_token');
-	let fetchedUsers: { items: AuthUser[]; count: number } = { count: 0, items: [] };
+	let fetchedRestaurants: { items: Restaurant[]; count: number } = { count: 0, items: [] };
 
 	if (tokenCookie) {
-		let res = await fetch('http://localhost:3000/api/users?role=RestaurantOwner', {
+		let res = await fetch('http://localhost:3000/api/restaurants', {
 			method: 'get',
 			headers: {
 				'content-type': 'application/json',
@@ -32,10 +33,10 @@ export const load: PageServerLoad = async ({
 				authorization: `Bearer ${tokenCookie}`
 			}
 		});
-		if (res?.status === 200) fetchedUsers = await res.json();
+		if (res?.status === 200) fetchedRestaurants = await res.json();
 	}
 	return {
-		users: { count: fetchedUsers.count, items: fetchedUsers.items }
+		restaurants: { count: fetchedRestaurants.count, items: fetchedRestaurants.items }
 	};
 };
 

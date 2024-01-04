@@ -17,26 +17,29 @@
 					<span>Home</span>
 				</AppRailAnchor>
 				{#if data.authUser.role == RoleEnum.Admin}
-					<AppRailAnchor href="/accounts" selected={$page.url.pathname === '/accounts'}>
+					<AppRailAnchor href="/accounts" selected={$page.url.pathname.includes('/accounts')}>
 						<svelte:fragment slot="lead"><i class="fa-solid fa-list text-2xl" /></svelte:fragment>
 						<span>Accounts</span>
 					</AppRailAnchor>
-					<AppRailAnchor href="/restaurants" selected={$page.url.pathname === '/restaurants'}>
+					<AppRailAnchor href="/restaurants" selected={$page.url.pathname.includes('/restaurants')}>
 						<svelte:fragment slot="lead"
 							><i class="fa-solid fa-list-check text-2xl" /></svelte:fragment
 						>
 						<span>Restaurants</span>
 					</AppRailAnchor>
 				{/if}
-				{#if data.authUser.role == RoleEnum.Admin || data.authUser.role == RoleEnum.RestaurantOwner}
-					<AppRailAnchor href="my-restaurants" selected={$page.url.pathname === '/my-restaurants'}>
+				{#if data.authUser.role == RoleEnum.RestaurantOwner}
+					<AppRailAnchor
+						href="my-restaurants"
+						selected={$page.url.pathname.includes('/my-restaurants')}
+					>
 						<svelte:fragment slot="lead"><i class="fa-solid fa-list text-2xl" /></svelte:fragment>
 						<span>My Restaurants</span>
 					</AppRailAnchor>
 				{/if}
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<AppRailAnchor href="/settings" selected={$page.url.pathname === '/settings'}>
+				<AppRailAnchor href="/settings" selected={$page.url.pathname.includes('/settings')}>
 					<svelte:fragment slot="lead"><i class="fa-solid fa-gear text-2xl" /></svelte:fragment>
 					<span>Settings</span>
 				</AppRailAnchor>

@@ -7,7 +7,7 @@
 <form
 	method="POST"
 	class="h-screen flex flex-col
-items-center justify-center gap-5"
+items-center justify-center gap-5 text-center"
 	autocomplete="off"
 >
 	{#if form?.missing}<p class="error">The email field is required</p>{/if}
@@ -20,4 +20,7 @@ items-center justify-center gap-5"
 		<input class="input" type="password" name="password" required placeholder="password" />
 	</label>
 	<button type="submit" class="btn variant-ghost-primary">Login</button>
+	<p class="text-sm">
+		You don't have an account ? <a class="underline" href="/auth/register">register</a>
+	</p>
 </form>

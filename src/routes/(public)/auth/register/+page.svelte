@@ -26,4 +26,7 @@ items-center justify-center gap-5"
 		<input class="input" type="password" name="password" required placeholder="password" />
 	</label>
 	<button type="submit" class="btn variant-ghost-primary">Register</button>
+	<p class="text-sm">
+		You already have an account ? <a class="underline" href="/auth">login</a>
+	</p>
 </form>

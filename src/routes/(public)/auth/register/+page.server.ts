@@ -13,7 +13,7 @@ export const actions = {
 			return fail(400, { email, missing: true });
 		}
 
-		const res = await fetch('http://localhost:3000/api/auth/register', {
+		const res = await fetch('http://localhost:3000/api/auth/register-restaurant-onwner', {
 			method: 'post',
 			body: JSON.stringify({ email, password, name, last_name }),
 			headers: {
