@@ -1,27 +1,32 @@
 <script lang="ts">
-	import { StatusEnum } from '../../../types/auth-user.interface';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 </script>
 
 <!-- Responsive Container (recommended) -->
-<div
-	class="table-container p-10 h-screen flex flex-col
-items-center gap-5"
->
+<div class="table-container p-10">
+	<a href="/my-restaurants/create"
+		><button type="button" class="btn btn-md variant-filled-primary mr-0 ml-auto block mb-3"
+			>+</button
+		></a
+	>
 	{#if data.restaurants.count}
 		<!-- Native Table Element -->
 		<table class="table table-hover">
 			<thead>
 				<tr>
+					<th>Id</th>
 					<th>Name</th>
+					<th>Location</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each data.restaurants.items as row, i}
 					<tr>
+						<td>{row.restaurant_id}</td>
 						<td>{row.name}</td>
+						<td>{row.location}</td>
 					</tr>
 				{/each}
 			</tbody>
@@ -33,7 +38,4 @@ items-center gap-5"
 						</tfoot> -->
 		</table>
 	{/if}
-	<a href="/my-restaurants/create"
-		><button type="button" class="btn btn-xl variant-filled-primary self-center">+</button></a
-	>
 </div>

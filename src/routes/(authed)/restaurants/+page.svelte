@@ -15,13 +15,17 @@ items-center gap-5"
 		<table class="table table-hover">
 			<thead>
 				<tr>
+					<th>Id</th>
 					<th>Name</th>
+					<th>Location</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each data.restaurants.items as row, i}
 					<tr>
+						<td>{row.restaurant_id}</td>
 						<td>{row.name}</td>
+						<td>{row.location}</td>
 					</tr>
 				{/each}
 			</tbody>

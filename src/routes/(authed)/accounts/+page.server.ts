@@ -61,7 +61,7 @@ export const actions = {
 
 		if (res?.status === 201) {
 			const data = await res.json();
-			console.log(data);
+
 			redirect(303, '/accounts');
 		}
 
@@ -88,7 +88,7 @@ export const actions = {
 
 		if (res?.status === 201) {
 			const data = await res.json();
-			console.log(data);
+
 			redirect(303, '/accounts');
 		}
 
