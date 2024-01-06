@@ -16,9 +16,7 @@ export const actions = {
 
 		const formData = new FormData();
 
-		formData.append('image', new Blob([await image.arrayBuffer()], { type: 'image/jpg' }));
-
-		console.log(formData);
+		formData.append('image', new Blob([await image.arrayBuffer()]));
 
 		const imageRes = await fetch('http://localhost:3000/api/files/upload', {
 			method: 'post',
@@ -28,8 +26,6 @@ export const actions = {
 				authorization: `Bearer ${tokenCookie}`
 			}
 		});
-
-		console.log(imageRes);
 
 		if (imageRes.status != 201) {
 			return fail(400, { fail: 'missing data', missing: true });

@@ -11,6 +11,7 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
+				<th>Id</th>
 				<th>Name</th>
 				<th>Last Name</th>
 				<th>Email</th>
@@ -21,6 +22,7 @@
 		<tbody>
 			{#each data.users.items as row, i}
 				<tr>
+					<td>{row.user_id}</td>
 					<td>{row.name}</td>
 					<td>{row.last_name}</td>
 					<td>{row.email}</td>

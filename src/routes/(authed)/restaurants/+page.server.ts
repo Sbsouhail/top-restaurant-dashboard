@@ -41,18 +41,18 @@ export const load: PageServerLoad = async ({
 };
 
 export const actions = {
-	accept: async ({ cookies, request, fetch }) => {
+	delete: async ({ cookies, request, fetch }) => {
 		const data = await request.formData();
-		const user_id = data.get('user_id');
+		const restaurant_id = data.get('restaurant_id');
 
-		if (!user_id) {
-			return fail(400, { user_id, missing: true });
+		if (!restaurant_id) {
+			return fail(400, { restaurant_id, missing: true });
 		}
 
 		const tokenCookie = cookies.get('access_token');
 
-		const res = await fetch(`http://localhost:3000/api/users/restaurant-owner/${user_id}/accept`, {
-			method: 'post',
+		const res = await fetch(`http://localhost:3000/api/restaurants/${restaurant_id}`, {
+			method: 'delete',
 			headers: {
 				'content-type': 'application/json',
 				accept: 'application/json',
@@ -66,33 +66,6 @@ export const actions = {
 			redirect(303, '/accounts');
 		}
 
-		return fail(res.status, { user_id });
-	},
-	block: async ({ cookies, request, fetch }) => {
-		const data = await request.formData();
-		const user_id = data.get('user_id');
-
-		if (!user_id) {
-			return fail(400, { user_id, missing: true });
-		}
-
-		const tokenCookie = cookies.get('access_token');
-
-		const res = await fetch(`http://localhost:3000/api/users/restaurant-owner/${user_id}/reject`, {
-			method: 'post',
-			headers: {
-				'content-type': 'application/json',
-				accept: 'application/json',
-				authorization: `Bearer ${tokenCookie}`
-			}
-		});
-
-		if (res?.status === 201) {
-			const data = await res.json();
-
-			redirect(303, '/accounts');
-		}
-
-		return fail(res.status, { user_id });
+		return fail(res.status, { restaurant_id });
 	}
 } satisfies Actions;

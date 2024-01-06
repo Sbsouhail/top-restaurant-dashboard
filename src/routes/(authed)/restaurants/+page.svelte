@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { StatusEnum } from '../../../types/auth-user.interface';
 	import type { PageData } from './$types';
 
@@ -18,14 +19,27 @@ items-center gap-5"
 					<th>Id</th>
 					<th>Name</th>
 					<th>Location</th>
+					<th>User email</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each data.restaurants.items as row, i}
-					<tr>
+					<tr
+						on:click={() => {
+							goto(`/restaurants/${row.restaurant_id}`);
+						}}
+					>
 						<td>{row.restaurant_id}</td>
 						<td>{row.name}</td>
 						<td>{row.location}</td>
+						<td>{row.user_email}</td>
+						<td>
+							<form method="POST" action="?/delete">
+								<input type="hidden" name="restaurant_id" value={row.restaurant_id} />
+								<button type="submit" class="btn btn-sm variant-ghost-warning">Delete</button>
+							</form>
+						</td>
 					</tr>
 				{/each}
 			</tbody>
