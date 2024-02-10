@@ -10,7 +10,7 @@
 	let paginationSettings = {
 		page: Number(query.get('page')) || 1,
 		limit: Number(query.get('page_size')) || 10,
-		size: data.menus.count,
+		size: data.items.count,
 		amounts: [2, 5, 10, 15]
 	} satisfies PaginationSettings;
 
@@ -26,48 +26,41 @@
 </script>
 
 <div class="flex items-center mt-3 gap-5 ml-10">
-	<a href="/restaurants"
+	<a href={`/restaurants/${$page.params.id}`}
 		><button type="button" class="btn btn-md variant-filled-primary block">{'<'}</button></a
 	>
-	<h2 class="h2">Menus</h2>
-</div>
-
-<div class="card m-10 p-5 rounded-2xl flex gap-5 items-center">
-	<Avatar
-		src="http://localhost:3000/{data.restaurant?.cover_image_uri}"
-		alt="cover"
-		width="w-32"
-		rounded="rounded-2xl"
-	/>
-	<div class="flex-col">
-		<p>ID: {data.restaurant.restaurant_id}</p>
-		<p>Name: {data.restaurant.name}</p>
-		<p>Location: {data.restaurant.location}</p>
-	</div>
+	<h2 class="h2">Meals</h2>
 </div>
 
 <!-- Responsive Container (recommended) -->
 <div class="table-container p-10">
-	{#if data.menus.count}
+	{#if data.items.count}
 		<!-- Native Table Element -->
 		<table class="table table-interactive mb-3">
 			<thead>
 				<tr>
 					<th>Id</th>
 					<th>Name</th>
-					<th>Active</th>
+					<th>Price</th>
+					<th>Description</th>
+					<th>Image</th>
 				</tr>
 			</thead>
 			<tbody>
-				{#each data.menus.items as row, i}
-					<tr
-						on:click={(event) => {
-							goto(`/restaurants/${row.restaurant_id}/menus/${row.restaurant_menu_id}`);
-						}}
-					>
+				{#each data.items.items as row, i}
+					<tr>
 						<td>{row.restaurant_menu_id}</td>
 						<td>{row.name}</td>
-						<td>{row.is_active}</td>
+						<td>{row.price} TND</td>
+						<td>{row.description}</td>
+						<td>
+							<Avatar
+								src="http://localhost:3000/{row.cover_image_uri}"
+								alt="cover"
+								width="w-9"
+								rounded="rounded-2xl"
+							/>
+						</td>
 					</tr>
 				{/each}
 			</tbody>

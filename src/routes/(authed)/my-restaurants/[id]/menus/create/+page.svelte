@@ -2,10 +2,14 @@
 	import { page } from '$app/stores';
 </script>
 
-<div>
-	<a href={`/my-restaurants/${$page.params.id}`} class="absolute mt-3 ml-3"
+<div class="flex items-center mt-3 gap-5 ml-10">
+	<a href={`/my-restaurants/${$page.params.id}`}
 		><button type="button" class="btn btn-md variant-filled-primary block">{'<'}</button></a
 	>
+	<h2 class="h2">Create Menu</h2>
+</div>
+
+<div>
 	<form
 		method="POST"
 		class="h-screen flex flex-col

@@ -17,22 +17,30 @@ function redirectTo(location: string, cookieToDelete?: string, body?: string): R
 
 export const load: PageServerLoad = async ({
 	cookies,
-	fetch
+	fetch,
+	url
 }): Promise<{
 	restaurants: { items: Restaurant[]; count: number };
 }> => {
 	const tokenCookie = cookies.get('access_token');
 	let fetchedRestaurants: { items: Restaurant[]; count: number } = { count: 0, items: [] };
 
+	const page = url.searchParams.get('page') || 1;
+
+	const page_size = url.searchParams.get('page_size') || 10;
+
 	if (tokenCookie) {
-		let res = await fetch('http://localhost:3000/api/restaurants', {
-			method: 'get',
-			headers: {
-				'content-type': 'application/json',
-				accept: 'application/json',
-				authorization: `Bearer ${tokenCookie}`
+		let res = await fetch(
+			`http://localhost:3000/api/restaurants?page=${page}&page_size=${page_size}`,
+			{
+				method: 'get',
+				headers: {
+					'content-type': 'application/json',
+					accept: 'application/json',
+					authorization: `Bearer ${tokenCookie}`
+				}
 			}
-		});
+		);
 		if (res?.status === 200) fetchedRestaurants = await res.json();
 	}
 	return {
@@ -60,10 +68,10 @@ export const actions = {
 			}
 		});
 
-		if (res?.status === 201) {
+		if (res?.status === 200) {
 			const data = await res.json();
 
-			redirect(303, '/accounts');
+			redirect(303, '/restaurants');
 		}
 
 		return fail(res.status, { restaurant_id });

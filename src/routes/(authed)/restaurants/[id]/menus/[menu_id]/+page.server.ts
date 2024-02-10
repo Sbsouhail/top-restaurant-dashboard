@@ -13,14 +13,14 @@ export const load: PageServerLoad = async ({
 	const tokenCookie = cookies.get('access_token');
 	const pageParams: any = params;
 
-	let items: { items: RestaurantMenuItem[]; count: number } = { count: 0, items: [] };
-
 	const page = url.searchParams.get('page') || 1;
 
 	const page_size = url.searchParams.get('page_size') || 10;
 
+	let items: { items: RestaurantMenuItem[]; count: number } = { count: 0, items: [] };
+
 	let res = await fetch(
-		`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items?page=${page}&page_size=${page_size}`,
+		`http://localhost:3000/api/restaurants/${pageParams.id}/menus/${pageParams.menu_id}/items?page=${page}&page_size=${page_size}`,
 		{
 			method: 'get',
 			headers: {

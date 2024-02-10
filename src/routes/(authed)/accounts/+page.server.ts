@@ -16,22 +16,31 @@ function redirectTo(location: string, cookieToDelete?: string, body?: string): R
 
 export const load: PageServerLoad = async ({
 	cookies,
-	fetch
+	fetch,
+	url
 }): Promise<{
 	users: { items: AuthUser[]; count: number };
 }> => {
 	const tokenCookie = cookies.get('access_token');
 	let fetchedUsers: { items: AuthUser[]; count: number } = { count: 0, items: [] };
 
+	const page = url.searchParams.get('page') || 1;
+
+	const page_size = url.searchParams.get('page_size') || 10;
+
 	if (tokenCookie) {
-		let res = await fetch('http://localhost:3000/api/users?role=RestaurantOwner', {
-			method: 'get',
-			headers: {
-				'content-type': 'application/json',
-				accept: 'application/json',
-				authorization: `Bearer ${tokenCookie}`
+		let res = await fetch(
+			`http://localhost:3000/api/users?role=RestaurantOwner&page=${page}&page_size=${page_size}`,
+			{
+				method: 'get',
+
+				headers: {
+					'content-type': 'application/json',
+					accept: 'application/json',
+					authorization: `Bearer ${tokenCookie}`
+				}
 			}
-		});
+		);
 		if (res?.status === 200) fetchedUsers = await res.json();
 	}
 	return {

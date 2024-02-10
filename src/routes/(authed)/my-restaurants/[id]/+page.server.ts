@@ -6,13 +6,18 @@ import type { RestaurantMenu } from '../../../../types/restaurant-menu.interface
 export const load: PageServerLoad = async ({
 	params,
 	fetch,
-	cookies
+	cookies,
+	url
 }): Promise<{
 	restaurant: Restaurant;
 	menus: { items: RestaurantMenu[]; count: number };
 }> => {
 	const tokenCookie = cookies.get('access_token');
 	const pageParams: any = params;
+
+	const page = url.searchParams.get('page') || 1;
+
+	const page_size = url.searchParams.get('page_size') || 10;
 
 	let restaurant: Restaurant;
 	// if (tokenCookie) {
@@ -27,14 +32,17 @@ export const load: PageServerLoad = async ({
 
 	let menus: { items: RestaurantMenu[]; count: number } = { count: 0, items: [] };
 
-	let res2 = await fetch(`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus`, {
-		method: 'get',
-		headers: {
-			'content-type': 'application/json',
-			accept: 'application/json',
-			authorization: `Bearer ${tokenCookie}`
+	let res2 = await fetch(
+		`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus?page=${page}&page_size=${page_size}`,
+		{
+			method: 'get',
+			headers: {
+				'content-type': 'application/json',
+				accept: 'application/json',
+				authorization: `Bearer ${tokenCookie}`
+			}
 		}
-	});
+	);
 
 	if (res2?.status === 200) menus = await res2.json();
 
