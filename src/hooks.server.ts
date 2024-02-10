@@ -1,10 +1,11 @@
+import { API_BASE_URL } from '$env/static/private';
 export const handle = async ({ event, resolve }) => {
 	try {
 		const tokenCookie = event.cookies.get('access_token');
 		let fetchedUser;
 
 		if (tokenCookie) {
-			const res = await event.fetch('http://localhost:3000/api/users/me', {
+			const res = await event.fetch(`${API_BASE_URL}/users/me`, {
 				method: 'get',
 				headers: {
 					'content-type': 'application/json',

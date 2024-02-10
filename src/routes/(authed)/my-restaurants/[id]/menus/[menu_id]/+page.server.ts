@@ -1,6 +1,7 @@
 import { redirect, type Actions, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { RestaurantMenuItem } from '../../../../../../types/restaurant-menu-item.interface';
+import { API_BASE_URL } from '$env/static/private';
 
 export const load: PageServerLoad = async ({
 	params,
@@ -20,7 +21,7 @@ export const load: PageServerLoad = async ({
 	const page_size = url.searchParams.get('page_size') || 10;
 
 	let res = await fetch(
-		`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items?page=${page}&page_size=${page_size}`,
+		`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items?page=${page}&page_size=${page_size}`,
 		{
 			method: 'get',
 			headers: {
@@ -53,7 +54,7 @@ export const actions = {
 		const tokenCookie = cookies.get('access_token');
 
 		const res = await fetch(
-			`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items/${menu_item_id}`,
+			`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items/${menu_item_id}`,
 			{
 				method: 'delete',
 				headers: {
@@ -65,7 +66,7 @@ export const actions = {
 		);
 
 		console.log(
-			`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items/${menu_item_id}`
+			`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items/${menu_item_id}`
 		);
 
 		if (res?.status === 200) {

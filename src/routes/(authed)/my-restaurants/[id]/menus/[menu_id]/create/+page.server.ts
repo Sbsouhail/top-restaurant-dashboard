@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { API_BASE_URL } from '$env/static/private';
 
 export const actions = {
 	default: async ({ cookies, request, fetch, params }) => {
@@ -22,7 +23,7 @@ export const actions = {
 
 		formData.append('image', new Blob([await image.arrayBuffer()]));
 
-		const imageRes = await fetch('http://localhost:3000/api/files/upload', {
+		const imageRes = await fetch(`${API_BASE_URL}/files/upload`, {
 			method: 'post',
 			body: formData,
 			headers: {
@@ -38,7 +39,7 @@ export const actions = {
 		const imageUri = (await imageRes.json()).path;
 
 		const res = await fetch(
-			`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items`,
+			`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items`,
 			{
 				method: 'post',
 				body: JSON.stringify({ name, description, price: +price, cover_image_uri: imageUri }),
@@ -51,7 +52,7 @@ export const actions = {
 		);
 
 		// console.log(
-		// 	`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items`
+		// 	`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${pageParams.menu_id}/items`
 		// );
 		// console.log(tokenCookie);
 		// console.log({ name, description, price, cover_image_uri: imageUri });

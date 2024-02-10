@@ -1,6 +1,7 @@
 import type { AuthUser } from '../../../types/auth-user.interface';
 import type { PageServerLoad } from '../../(public)/auth/$types';
 import { redirect, type Actions, fail } from '@sveltejs/kit';
+import { API_BASE_URL } from '$env/static/private';
 
 function redirectTo(location: string, cookieToDelete?: string, body?: string): Response {
 	return new Response(body, {
@@ -30,7 +31,7 @@ export const load: PageServerLoad = async ({
 
 	if (tokenCookie) {
 		let res = await fetch(
-			`http://localhost:3000/api/users?role=RestaurantOwner&page=${page}&page_size=${page_size}`,
+			`${API_BASE_URL}/users?role=RestaurantOwner&page=${page}&page_size=${page_size}`,
 			{
 				method: 'get',
 
@@ -59,7 +60,7 @@ export const actions = {
 
 		const tokenCookie = cookies.get('access_token');
 
-		const res = await fetch(`http://localhost:3000/api/users/restaurant-owner/${user_id}/accept`, {
+		const res = await fetch(`${API_BASE_URL}/users/restaurant-owner/${user_id}/accept`, {
 			method: 'post',
 			headers: {
 				'content-type': 'application/json',
@@ -86,7 +87,7 @@ export const actions = {
 
 		const tokenCookie = cookies.get('access_token');
 
-		const res = await fetch(`http://localhost:3000/api/users/restaurant-owner/${user_id}/reject`, {
+		const res = await fetch(`${API_BASE_URL}/users/restaurant-owner/${user_id}/reject`, {
 			method: 'post',
 			headers: {
 				'content-type': 'application/json',

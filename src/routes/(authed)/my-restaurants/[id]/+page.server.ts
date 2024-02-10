@@ -2,6 +2,7 @@ import { fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from '../$types';
 import type { Restaurant } from '../../../../types/restaurant.interface';
 import type { RestaurantMenu } from '../../../../types/restaurant-menu.interface';
+import { API_BASE_URL } from '$env/static/private';
 
 export const load: PageServerLoad = async ({
 	params,
@@ -21,7 +22,7 @@ export const load: PageServerLoad = async ({
 
 	let restaurant: Restaurant;
 	// if (tokenCookie) {
-	let res = await fetch(`http://localhost:3000/api/restaurants/${pageParams.id}`, {
+	let res = await fetch(`${API_BASE_URL}/restaurants/${pageParams.id}`, {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
@@ -33,7 +34,7 @@ export const load: PageServerLoad = async ({
 	let menus: { items: RestaurantMenu[]; count: number } = { count: 0, items: [] };
 
 	let res2 = await fetch(
-		`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus?page=${page}&page_size=${page_size}`,
+		`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus?page=${page}&page_size=${page_size}`,
 		{
 			method: 'get',
 			headers: {
@@ -68,17 +69,14 @@ export const actions = {
 
 		const tokenCookie = cookies.get('access_token');
 
-		const res = await fetch(
-			`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${menu_id}`,
-			{
-				method: 'delete',
-				headers: {
-					'content-type': 'application/json',
-					accept: 'application/json',
-					authorization: `Bearer ${tokenCookie}`
-				}
+		const res = await fetch(`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${menu_id}`, {
+			method: 'delete',
+			headers: {
+				'content-type': 'application/json',
+				accept: 'application/json',
+				authorization: `Bearer ${tokenCookie}`
 			}
-		);
+		});
 
 		if (res?.status === 200) {
 			const data = await res.json();
@@ -101,7 +99,7 @@ export const actions = {
 		const tokenCookie = cookies.get('access_token');
 
 		const res = await fetch(
-			`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${menu_id}/activate`,
+			`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${menu_id}/activate`,
 			{
 				method: 'PATCH',
 				headers: {
@@ -133,7 +131,7 @@ export const actions = {
 		const tokenCookie = cookies.get('access_token');
 
 		const res = await fetch(
-			`http://localhost:3000/api/restaurants/${pageParams.id}/my_menus/${menu_id}/disactivate`,
+			`${API_BASE_URL}/restaurants/${pageParams.id}/my_menus/${menu_id}/disactivate`,
 			{
 				method: 'PATCH',
 				headers: {

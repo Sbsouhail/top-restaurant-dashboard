@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { API_BASE_URL } from '$env/static/private';
 
 export const actions = {
 	default: async ({ cookies, request, fetch }) => {
@@ -14,7 +15,7 @@ export const actions = {
 			return fail(400, { fail: 'missing data', missing: true });
 		}
 
-		const res = await fetch(`http://localhost:3000/api/restaurants/${id}/my_menus`, {
+		const res = await fetch(`${API_BASE_URL}/restaurants/${id}/my_menus`, {
 			method: 'post',
 			body: JSON.stringify({ name, description, is_active: false }),
 			headers: {

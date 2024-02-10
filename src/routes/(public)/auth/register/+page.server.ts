@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { API_BASE_URL } from '$env/static/private';
 
 export const actions = {
 	default: async ({ cookies, request, fetch }) => {
@@ -13,7 +14,7 @@ export const actions = {
 			return fail(400, { email, missing: true });
 		}
 
-		const res = await fetch('http://localhost:3000/api/auth/register-restaurant-onwner', {
+		const res = await fetch(`${API_BASE_URL}/auth/register-restaurant-onwner`, {
 			method: 'post',
 			body: JSON.stringify({ email, password, name, last_name }),
 			headers: {
