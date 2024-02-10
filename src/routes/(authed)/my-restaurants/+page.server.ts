@@ -60,10 +60,10 @@ export const actions = {
 			}
 		});
 
-		if (res?.status === 201) {
+		if (res?.status === 200) {
 			const data = await res.json();
 
-			redirect(303, '/accounts');
+			redirect(303, '/my-restaurants');
 		}
 
 		return fail(res.status, { restaurant_id });
