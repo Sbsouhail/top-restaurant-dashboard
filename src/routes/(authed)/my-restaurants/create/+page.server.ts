@@ -8,10 +8,12 @@ export const actions = {
 
 		const name = data.get('name');
 		const location = data.get('location');
+		const phone = data.get('phone');
+		const email = data.get('email');
 		const image = data.get('image') as File;
 		const tokenCookie = cookies.get('access_token');
 
-		if (!name || !location || !image) {
+		if (!name || !location || !phone || !email || !image) {
 			return fail(400, { fail: 'missing data', missing: true });
 		}
 
@@ -36,7 +38,7 @@ export const actions = {
 
 		const res = await fetch(`${API_BASE_URL}/restaurants`, {
 			method: 'post',
-			body: JSON.stringify({ name, location, cover_image_uri: imageUri }),
+			body: JSON.stringify({ name, location, cover_image_uri: imageUri, phone, email }),
 			headers: {
 				'content-type': 'application/json',
 				accept: 'application/json',

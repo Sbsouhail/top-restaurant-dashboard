@@ -20,6 +20,12 @@ items-center justify-center gap-5"
 			<input class="input" type="text" name="name" required placeholder="name" />
 		</label>
 		<label class="label">
+			<input class="input" type="tel" name="phone" required placeholder="phone" />
+		</label>
+		<label class="label">
+			<input class="input" type="text" name="email" required placeholder="email" />
+		</label>
+		<label class="label">
 			<textarea class="textarea" rows="4" name="location" required placeholder="location" />
 		</label>
 

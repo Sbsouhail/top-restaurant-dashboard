@@ -4,4 +4,6 @@ export interface Restaurant {
 	location: string;
 	cover_image_uri: string;
 	user_email?: string;
+	email: string;
+	phone: string;
 }

@@ -46,6 +46,8 @@
 				<tr>
 					<th>Id</th>
 					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
 					<th>Location</th>
 					<th>Actions</th>
 				</tr>
@@ -59,6 +61,8 @@
 					>
 						<td>{row.restaurant_id}</td>
 						<td>{row.name}</td>
+						<td>{row.phone}</td>
+						<td>{row.email}</td>
 						<td>{row.location}</td>
 						<td>
 							<form method="POST" action="?/delete">

@@ -42,6 +42,8 @@
 	<div class="flex-col">
 		<p>ID: {data.restaurant.restaurant_id}</p>
 		<p>Name: {data.restaurant.name}</p>
+		<p>Phone: {data.restaurant.phone}</p>
+		<p>Email: {data.restaurant.email}</p>
 		<p>Location: {data.restaurant.location}</p>
 	</div>
 </div>

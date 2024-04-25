@@ -14,7 +14,7 @@ export const actions = {
 			return fail(400, { email, missing: true });
 		}
 
-		const res = await fetch(`${API_BASE_URL}/auth/register-restaurant-onwner`, {
+		const res = await fetch(`${API_BASE_URL}/auth/register-restaurant-owner`, {
 			method: 'post',
 			body: JSON.stringify({ email, password, name, last_name }),
 			headers: {
